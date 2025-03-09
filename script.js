@@ -35,6 +35,7 @@ voiceBtn.addEventListener('click', () => {
 
 recognition.onresult = async (event) => {
   const transcript = event.results[0][0].transcript;
+  console.log('Voice Input:', transcript); // Debug voice input
   userInput.value = transcript;
   recognition.stop();
   voiceBtn.innerHTML = '<i class="fas fa-microphone"></i>';
@@ -51,6 +52,7 @@ recognition.onend = () => {
 
 async function getAIResponse(userMessage) {
   try {
+    console.log('Sending request:', userMessage); // Debug request
     const response = await fetch(API_URL, {
       method: 'POST',
       headers: {
@@ -65,6 +67,7 @@ async function getAIResponse(userMessage) {
     });
 
     const data = await response.json();
+    console.log('API Response:', data); // Debug response
     return data.choices[0].message.content;
   } catch (error) {
     console.error('Error fetching AI response:', error);
